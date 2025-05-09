@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сабақ 2 - Адам физиологиясы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #12594D;
+            --accent-color: #00c8a1;
+            --secondary-color: #B9D3B5;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 90px;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: var(--secondary-color);
+            color: #12594D;
+            padding: 60px 20px 100px;
+            position: relative;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/BiologyWithMe/images/human1.jpg') center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #12594D;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .lesson-badge {
+            background: rgba(18, 89, 77, 0.1);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .header-meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .header-meta-item i {
+            margin-right: 8px;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 800px;
+            margin: -50px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .content-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-text p {
+            margin-bottom: 15px;
+        }
+
+        .content-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .image-container {
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.03);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .video-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Floating buttons */
+        .floating-btn {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .floating-btn i {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .chat-btn {
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .progress-container {
+            margin: 30px 0;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 100%;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            .header {
+                padding: 50px 20px 80px;
+            }
+            
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .content-text {
+                font-size: 15px;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="../home.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Артқа
+            </a>
+            <div style="text-align: center;">
+                <div class="lesson-badge" style="margin-top: 15px;">Сабақ 2</div>
+                <h1>Адам физиологиясы</h1>
+                <div class="header-meta">
+                    <div class="header-meta-item">
+                        <i class="fas fa-clock"></i> 20 минут
+                    </div>
+                    <div class="header-meta-item">
+                        <i class="fas fa-chart-simple"></i> Орташа деңгей
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <h2 class="section-title">Физиология негіздері</h2>
+            <div class="content-text">
+                <p>
+                    Адам физиологиясы — адам ағзасындағы тіршілік процесін, мүшелердің, жүйелердің және ұлпалардың қызметін
+                    зерттейтін ғылым саласы.
+                </p>
+                <p>
+                    Жүйке жүйесі, қан айналымы, тыныс алу, ас қорыту және басқа да жүйелер адамның тіршілігін қамтамасыз
+                    етеді. Мысалы, жүрек қанды бүкіл ағзаға таратады, ал өкпе оттегіні сіңіріп, көмірқышқыл газын шығарады.
+                </p>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2 class="section-title">Мүшелер қызметі</h2>
+            <div class="content-text">
+                <p>
+                    Адам физиологиясы — адам денесінің қалай жұмыс істейтінін зерттейтін ғылым. Ол ағзаның түрлі мүшелерінің
+                    және жүйелерінің қызметін қарастырады. Әрбір мүше белгілі бір маңызды қызмет атқарады.
+                </p>
+                <p>
+                    Асқорыту жүйесі — тағамды энергияға айналдырады. Бүйрек — қаннан зиянды заттарды сүзеді, ал бауыр —
+                    түрлі улы заттарды зарарсыздандырады. Бұлшықеттер мен сүйектер адамның қозғалуын және дене қалпын қамтамасыз
+                    етеді.
+                </p>
+            </div>
+            
+            <div class="video-grid">
+                <div class="video-item">
+                    <video autoplay muted loop playsinline>
+                        <source src="/BiologyWithMe/images/humanVideo2.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-item">
+                    <video autoplay muted loop playsinline>
+                        <source src="/BiologyWithMe/images/humanVideo4.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-card">
+            <h2 class="section-title">Адам ағзасының жүйелері</h2>
+            <div class="image-container">
+                <img src="/BiologyWithMe/images/human1.jpg" alt="Адам ағзасы">
+            </div>
+            <div class="content-text">
+                <p>
+                    Адам ағзасы — күрделі биологиялық жүйе. Барлық мүшелер мен жүйелер бірігіп, ағзаның дұрыс жұмыс істеуін
+                    қамтамасыз етеді. Бұл жүйелер бір-бірімен тығыз байланыста жұмыс істейді.
+                </p>
+                <p>
+                    Жүйке жүйесі арқылы ми барлық мүшелерге сигнал жіберіп, олардың жұмысын реттейді. Бұл жүйе рефлекстер,
+                    ойлау, эмоциялар мен тепе-теңдікті бақылауда маңызды рөл атқарады.
+                </p>
+                <p>
+                    Тыныс алу мен қан айналымы жүйелері бірігіп, оттегіні өкпеден қанға жеткізеді. Қан айналым жүйесі бұл
+                    оттегіні және қоректік заттарды барлық жасушаларға тасымалдайды.
+                </p>
+                <p>
+                    Иммундық жүйе ағзаны ауру тудыратын микробтардан қорғайды. Терінің өзі де сыртқы қорғаныс қызметін атқарады
+                    — ол дене температурасын реттейді және ағзаны жарақаттан қорғайды.
+                </p>
+                <p>
+                    Эндокриндік жүйе гормондар арқылы мүшелердің қызметін реттейді. Бұлшықеттер мен сүйектер қозғалысты,
+                    дене қалпын және ішкі мүшелерді қолдайды.
+                </p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-title">Сабақ аяқталды</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span>Прогресс</span>
+                <span>100%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating buttons -->
+    <a href="../home.html" class="floating-btn home-btn">
+        <i class="fas fa-home"></i>
+    </a>
+    <a href="../chat.html" class="floating-btn chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+</body>

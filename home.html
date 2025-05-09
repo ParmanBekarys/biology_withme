@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="kk">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Biology With Me</title>
+        <link rel="stylesheet" href="home.css">  <!-- Контентке арналған стильдер -->
+        <link rel="stylesheet" href="nav.css">   <!-- Навигация панелі -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    
+<body>
+    <!-- Header with Logo -->
+    <div class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/2941/2941462.png" alt="Biology Icon">
+                <span>Biology With Me</span>
+            </div>
+        </div>
+        <h2>Бүгін қандай тақырыпты үйренгің келеді?</h2>
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Іздеу...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="section-header">
+            <h3 class="section-title">Сабақтар</h3>
+            <a href="#" class="view-all">Барлығы <i class="fas fa-chevron-right"></i></a>
+        </div>
+
+        <div class="lazy-row">
+            <a href="lessons/lesson2.html" class="lesson-card">
+                <div class="lesson-image-container" style="background-color: rgba(185, 211, 181, 0.3);">
+                    <img src="images/адам.avif" alt="Физиология" class="lesson-image">
+                </div>
+                <div class="lesson-info">
+                    <div class="lesson-title">Адам физиологиясы</div>
+                    <div class="lesson-meta">
+                        <span><i class="fas fa-book"></i> 8 тақырып</span>
+                        <span><i class="fas fa-clock"></i> 45 мин</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="lessons/lesson1.html" class="lesson-card">
+                <div class="lesson-image-container" style="background-color: rgba(94, 163, 180, 0.3);">
+                    <img src="images/жасуша.avif" alt="Жасуша" class="lesson-image">
+                </div>
+                <div class="lesson-info">
+                    <div class="lesson-title">Жасуша құрылымы</div>
+                    <div class="lesson-meta">
+                        <span><i class="fas fa-book"></i> 6 тақырып</span>
+                        <span><i class="fas fa-clock"></i> 30 мин</span>
+                    </div>
+                </div>
+            </a>
+        
+            <a href="lessons/lesson3.html" class="lesson-card">
+                <div class="lesson-image-container" style="background-color: rgba(255, 186, 186, 0.3);">
+                    <img src="images/генетика.avif" alt="Генетика" class="lesson-image">
+                </div>
+                <div class="lesson-info">
+                    <div class="lesson-title">Генетика негіздері</div>
+                    <div class="lesson-meta">
+                        <span><i class="fas fa-book"></i> 10 тақырып</span>
+                        <span><i class="fas fa-clock"></i> 60 мин</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        
+        <div class="section-header">
+            <h3 class="section-title">Тест сұрақтары</h3>
+            <a href="#" class="view-all">Барлығы <i class="fas fa-chevron-right"></i></a>
+        </div>
+        
+        <div class="tests-grid">
+            <a href="tests/test1.html" class="test-card">
+                <div class="test-image" style="background-color: rgba(149, 216, 122, 0.2);">
+                    <img src="images/анатомия.jpg" alt="Анатомия">
+                    <div class="difficulty easy"><i class="fas fa-circle"></i> Жеңіл</div>
+                </div>
+                <div class="test-info">
+                    <h4>Анатомия</h4>
+                    <div class="test-meta">
+                        <span><i class="fas fa-question-circle"></i> 10 сұрақ</span>
+                        <span><i class="fas fa-users"></i> 1.2K студент</span>
+                    </div>
+                </div>
+            </a>
+        
+            <a href="tests/test2.html" class="test-card">
+                <div class="test-image" style="background-color: rgba(227, 206, 129, 0.2);">
+                    <img src="images/зоология.jpg" alt="Зоология">
+                    <div class="difficulty medium"><i class="fas fa-circle"></i> Орташа</div>
+                </div>
+                <div class="test-info">
+                    <h4>Зоология</h4>
+                    <div class="test-meta">
+                        <span><i class="fas fa-question-circle"></i> 20 сұрақ</span>
+                        <span><i class="fas fa-users"></i> 856 студент</span>
+                    </div>
+                </div>
+            </a>
+        
+            <a href="tests/test3.html" class="test-card">
+                <div class="test-image" style="background-color: rgba(94, 163, 180, 0.2);">
+                    <img src="images/цитология.webp" alt="Цитология">
+                    <div class="difficulty medium"><i class="fas fa-circle"></i> Орташа</div>
+                </div>
+                <div class="test-info">
+                    <h4>Цитология</h4>
+                    <div class="test-meta">
+                        <span><i class="fas fa-question-circle"></i> 15 сұрақ</span>
+                        <span><i class="fas fa-users"></i> 724 студент</span>
+                    </div>
+                </div>
+            </a>
+        
+            <a href="tests/test4.html" class="test-card">
+                <div class="test-image" style="background-color: rgba(149, 216, 122, 0.2);">
+                    <img src="images/ботаника.jpg" alt="Ботаника">
+                    <div class="difficulty hard"><i class="fas fa-circle"></i> Қиын</div>
+                </div>
+                <div class="test-info">
+                    <h4>Ботаника</h4>
+                    <div class="test-meta">
+                        <span><i class="fas fa-question-circle"></i> 13 сұрақ</span>
+                        <span><i class="fas fa-users"></i> 598 студент</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="bottom-nav">
+        <div class="nav-btn active">
+            <a href="home.html">
+                <i class="fas fa-home icon"></i>
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="video.html">
+                <i class="fas fa-video icon"></i>
+                <span class="label">Video</span>
+
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="chat.html">
+                <i class="fas fa-comment-dots icon"></i>
+                <span class="label">Chat</span>
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="profile.html">
+                <i class="fas fa-user icon"></i>
+                <span class="label">Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

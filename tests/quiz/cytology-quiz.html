@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цитология Тесті</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #3F51B5;
+      --accent-color: #7986CB;
+      --text-color: #333;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --correct-color: #4CAF50;
+      --wrong-color: #F44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .quiz-header h1 {
+      color: var(--primary-color);
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .quiz-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .quiz-info-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .quiz-info-item i {
+      margin-right: 8px;
+      color: var(--accent-color);
+    }
+
+    .timer-container {
+      background-color: white;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+
+    .timer {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .timer.warning {
+      color: #FF9800;
+    }
+
+    .timer.danger {
+      color: #F44336;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .progress-container {
+      margin-bottom: 30px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-color);
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .question {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .question:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .question p {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .answer-option {
+      position: relative;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option:hover {
+      background-color: #e9e9e9;
+    }
+
+    .answer-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .answer-option label {
+      display: block;
+      padding-left: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    .answer-option label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #999;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option input[type="radio"]:checked + label:before {
+      border-color: var(--accent-color);
+      background-color: var(--accent-color);
+    }
+
+    .answer-option input[type="radio"]:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: white;
+    }
+
+    .answer-option.correct {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--correct-color);
+    }
+
+    .answer-option.wrong {
+      background-color: rgba(244, 67, 54, 0.1);
+      border: 1px solid var(--wrong-color);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: white;
+      box-shadow: 0 4px 15px rgba(121, 134, 203, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #444;
+    }
+
+    .btn i {
+      margin-right: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #result {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 30px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .result-score {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .result-message {
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-header h1 {
+        font-size: 26px;
+      }
+      
+      .question p {
+        font-size: 16px;
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Цитология Тесті</h1>
+      <div class="quiz-info">
+        <div class="quiz-info-item">
+          <i class="fas fa-question-circle"></i>
+          <span>15 сұрақ</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-clock"></i>
+          <span>4 минут</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-trophy"></i>
+          <span>100 ұпай</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-container">
+      <div class="timer" id="timer">04:00</div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text">
+        <span id="currentQuestion">1</span>
+        <span>/ 15 сұрақ</span>
+      </div>
+    </div>
+
+    <form id="quizForm">
+      <!-- Question 1 -->
+      <div class="question">
+        <p>1. Цитология нені зерттейді?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q1a" name="q1" value="A">
+            <label for="q1a">A) Ағзаларды</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1b" name="q1" value="B">
+            <label for="q1b">B) Жүйелерді</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1c" name="q1" value="C">
+            <label for="q1c">C) Ұлпаларды</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1d" name="q1" value="D">
+            <label for="q1d">D) Жасушаларды</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question">
+        <p>2. Жасушаның негізгі бөлігі не?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q2a" name="q2" value="A">
+            <label for="q2a">A) Цитоплазма</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2b" name="q2" value="B">
+            <label for="q2b">B) Митохондрия</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2c" name="q2" value="C">
+            <label for="q2c">C) Ядро</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2d" name="q2" value="D">
+            <label for="q2d">D) Рибосома</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question">
+        <p>3. Прокариот жасушаларына не тән?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q3a" name="q3" value="A">
+            <label for="q3a">A) Ядросы бар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3b" name="q3" value="B">
+            <label for="q3b">B) Ядросы жоқ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3c" name="q3" value="C">
+            <label for="q3c">C) Органоидтары көп</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3d" name="q3" value="D">
+            <label for="q3d">D) Қабықшасы жоқ</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question">
+        <p>4. Жасуша мембранасының қызметі қандай?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q4a" name="q4" value="A">
+            <label for="q4a">A) Энергия өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4b" name="q4" value="B">
+            <label for="q4b">B) Ақуыз синтезі</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4c" name="q4" value="C">
+            <label for="q4c">C) Қорғаныш және зат алмасу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4d" name="q4" value="D">
+            <label for="q4d">D) Бөлу</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question">
+        <p>5. Митохондрия қандай қызмет атқарады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q5a" name="q5" value="A">
+            <label for="q5a">A) Ақуыз өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5b" name="q5" value="B">
+            <label for="q5b">B) Энергия өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5c" name="q5" value="C">
+            <label for="q5c">C) Сыртқы қабықша түзу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5d" name="q5" value="D">
+            <label for="q5d">D) ДНҚ көшіру</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question">
+        <p>6. Жасушадағы генетикалық ақпарат қайда орналасқан?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q6a" name="q6" value="A">
+            <label for="q6a">A) Цитоплазмада</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6b" name="q6" value="B">
+            <label for="q6b">B) Ядро мен митохондрияда</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6c" name="q6" value="C">
+            <label for="q6c">C) Гольджи аппаратында</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6d" name="q6" value="D">
+            <label for="q6d">D) Рибосомада</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 7 -->
+      <div class="question">
+        <p>7. Жасуша бөліктерінің жиынтығы қалай аталады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q7a" name="q7" value="A">
+            <label for="q7a">A) Организм</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7b" name="q7" value="B">
+            <label for="q7b">B) Органоидтар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7c" name="q7" value="C">
+            <label for="q7c">C) Жүйе</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7d" name="q7" value="D">
+            <label for="q7d">D) Ұлпа</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 8 -->
+      <div class="question">
+        <p>8. Рибосомалардың негізгі қызметі қандай?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q8a" name="q8" value="A">
+            <label for="q8a">A) Энергия бөлу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8b" name="q8" value="B">
+            <label for="q8b">B) Ақуыз синтезі</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8c" name="q8" value="C">
+            <label for="q8c">C) Көмірсу түзу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8d" name="q8" value="D">
+            <label for="q8d">D) Зат тасымалдау</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 9 -->
+      <div class="question">
+        <p>9. Гольджи аппаратының негізгі қызметі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q9a" name="q9" value="A">
+            <label for="q9a">A) Энергия өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9b" name="q9" value="B">
+            <label for="q9b">B) Лизосома өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9c" name="q9" value="C">
+            <label for="q9c">C) Қабықша түзу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9d" name="q9" value="D">
+            <label for="q9d">D) Ақуызды ыдырату</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 10 -->
+      <div class="question">
+        <p>10. Жасуша қабырғасы қай ағзаларда кездеседі?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q10a" name="q10" value="A">
+            <label for="q10a">A) Вирустарда</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10b" name="q10" value="B">
+            <label for="q10b">B) Жануарлар жасушасында</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10c" name="q10" value="C">
+            <label for="q10c">C) Өсімдік және бактерияларда</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10d" name="q10" value="D">
+            <label for="q10d">D) Қанда</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 11 -->
+      <div class="question">
+        <p>11. Лизосомалар не үшін қажет?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q11a" name="q11" value="A">
+            <label for="q11a">A) Ақуыз тасымалдау</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11b" name="q11" value="B">
+            <label for="q11b">B) Энергия сақтау</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11c" name="q11" value="C">
+            <label for="q11c">C) Қорытылмаған заттарды ыдырату</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11d" name="q11" value="D">
+            <label for="q11d">D) ДНҚ көшіру</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 12 -->
+      <div class="question">
+        <p>12. Хлоропласт қайда кездеседі?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q12a" name="q12" value="A">
+            <label for="q12a">A) Жануарлар жасушасында</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12b" name="q12" value="B">
+            <label for="q12b">B) Өсімдік жасушасында</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12c" name="q12" value="C">
+            <label for="q12c">C) Бактерияда</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12d" name="q12" value="D">
+            <label for="q12d">D) Вирустарда</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 13 -->
+      <div class="question">
+        <p>13. Цитоплазмада не орналасқан?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q13a" name="q13" value="A">
+            <label for="q13a">A) Тек ядро</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13b" name="q13" value="B">
+            <label for="q13b">B) Тек ДНҚ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13c" name="q13" value="C">
+            <label for="q13c">C) Органоидтар мен ерітінді</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13d" name="q13" value="D">
+            <label for="q13d">D) Қан тамырлары</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 14 -->
+      <div class="question">
+        <p>14. Жасуша бөлінуі қай органоидпен байланысты?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q14a" name="q14" value="A">
+            <label for="q14a">A) Лизосома</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14b" name="q14" value="B">
+            <label for="q14b">B) Центриоль</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14c" name="q14" value="C">
+            <label for="q14c">C) Рибосома</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14d" name="q14" value="D">
+            <label for="q14d">D) Хлоропласт</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 15 -->
+      <div class="question">
+        <p>15. Ядроның қызметі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q15a" name="q15" value="A">
+            <label for="q15a">A) Энергия өндіру</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15b" name="q15" value="B">
+            <label for="q15b">B) Зат тасымалдау</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15c" name="q15" value="C">
+            <label for="q15c">C) Ақуыз сақтау</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15d" name="q15" value="D">
+            <label for="q15d">D) Генетикалық ақпаратты сақтау және реттеу</label>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="button-container">
+      <button type="button" onclick="checkAnswers()" class="btn btn-primary">
+        <i class="fas fa-check-circle"></i>Нәтижені Көрсету
+      </button>
+      <button onclick="window.location.href='/BiologyWithMe/home.html'" class="btn btn-secondary">
+        <i class="fas fa-home"></i>Басты бетке қайту
+      </button>
+    </div>
+
+    <div id="result">
+      <div class="result-title">Тест нәтижесі</div>
+      <div class="result-score" id="score">0/15</div>
+      <div class="result-message" id="resultMessage">Сіз тестті аяқтадыңыз!</div>
+      <button class="btn btn-primary" onclick="window.location.reload()">
+        <i class="fas fa-redo"></i>Қайта тапсыру
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Timer functionality
+    let timeLeft = 240; // 4 minutes in seconds
+    const timerElement = document.getElementById('timer');
+    
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      
+      // Format the time display (add leading zeros if needed)
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // Add visual warnings as time decreases
+      if (timeLeft <= 60) {
+        timerElement.classList.add('warning');
+      }
+      if (timeLeft <= 30) {
+        timerElement.classList.remove('warning');
+        timerElement.classList.add('danger');
+      }
+      
+      if (timeLeft <= 0) {
+        // Time's up - automatically submit the quiz
+        clearInterval(timerInterval);
+        checkAnswers();
+        timerElement.textContent = "Уақыт бітті!";
+      } else {
+        timeLeft--;
+      }
+    }
+    
+    // Start the timer
+    updateTimer();
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Update progress bar as user moves through questions
+    const questions = document.querySelectorAll('.question');
+    let currentQuestionIndex = 0;
+    const progressFill = document.getElementById('progressFill');
+    const currentQuestionSpan = document.getElementById('currentQuestion');
+
+    // Initial setup
+    updateProgress();
+
+    // Add event listeners to all radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        // Find the current question
+        const questionDiv = this.closest('.question');
+        const nextQuestion = questionDiv.nextElementSibling;
+        
+        if (nextQuestion && nextQuestion.classList.contains('question')) {
+          // Scroll to next question
+          nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Update current question index
+          currentQuestionIndex = Array.from(questions).indexOf(nextQuestion);
+          updateProgress();
+        }
+      });
+    });
+
+    function updateProgress() {
+      const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+      progressFill.style.width = `${progress}%`;
+      currentQuestionSpan.textContent = currentQuestionIndex + 1;
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let totalQuestions = 15;
+      
+      if (document.querySelector('input[name="q1"]:checked')?.value === "D") score++;
+      if (document.querySelector('input[name="q2"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q3"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q4"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q5"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q6"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q7"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q8"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q9"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q10"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q11"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q12"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q13"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q14"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q15"]:checked')?.value === "D") score++;
+      
+      // Display result
+      const scoreElement = document.getElementById('score');
+      const resultMessage = document.getElementById('resultMessage');
+      const resultDiv = document.getElementById('result');
+      
+      scoreElement.textContent = `${score}/${totalQuestions}`;
+      
+      if (score / totalQuestions >= 0.8) {
+        resultMessage.textContent = "Тамаша! Сіз цитология тақырыбын жақсы меңгергенсіз!";
+      } else if (score / totalQuestions >= 0.6) {
+        resultMessage.textContent = "Жақсы! Біраз білімдерді меңгергенсіз.";
+      } else {
+        resultMessage.textContent = "Цитология тақырыбын қайта қарап шығуыңыз керек.";
+      }
+      
+      resultDiv.style.display = "block";
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>

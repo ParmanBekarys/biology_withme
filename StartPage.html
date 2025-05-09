@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology With Me - Бастау</title>
+    <link rel="stylesheet" href="StartPage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Biology With Me</h1>
+            <p class="subtitle">Биологияны бірге үйренейік!</p>
+        </div>
+        
+        <div class="mood-card">
+            <h2>Сабағың қалай болып жатыр?</h2>
+            
+            <div class="mood-icon">
+                <img src="https://img.icons8.com/fluency-systems-filled/96/00c8a1/wink.png" alt="mood-icon">
+            </div>
+            
+            <div class="mood-text">Керемет!</div>
+            
+            <div class="slider-container">
+                <div class="slider-labels">
+                    <span>😢</span>
+                    <span>😐</span>
+                    <span>😊</span>
+                </div>
+                <input type="range" min="0" max="100" value="75" id="moodSlider">
+            </div>
+        </div>
+        
+        <button class="continue-btn">Бастау <span class="arrow">→</span></button>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <div class="feature-text">Интерактивті сабақтар</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🧪</div>
+                <div class="feature-text">Тәжірибелік жұмыстар</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-text">AI көмекші</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('moodSlider');
+        const moodText = document.querySelector('.mood-text');
+        const moodIcon = document.querySelector('.mood-icon img');
+        const moodIconContainer = document.querySelector('.mood-icon');
+        const continueBtn = document.querySelector('.continue-btn');
+    
+        // Слайдердің фонын жаңарту функциясы
+        function updateSliderBackground(value) {
+            const percent = value;
+            let color;
+            
+            if (value < 30) {
+                color = '#f44336'; // Қызыл түс
+            } else if (value < 70) {
+                color = '#ffc107'; // Сары түс
+            } else {
+                color = '#00c8a1'; // Жасыл түс
+            }
+            
+            slider.style.background = `linear-gradient(to right, ${color} 0%, ${color} ${percent}%, #eee ${percent}%, #eee 100%)`;
+        }
+    
+        // Бастапқы слайдер фоны
+        updateSliderBackground(slider.value);
+    
+        slider.addEventListener('input', () => {
+            const value = slider.value;
+            
+            if (value < 30) {
+                moodText.textContent = 'Қиын болып жатыр ма?';
+                moodIcon.src = 'https://img.icons8.com/fluency-systems-filled/96/f44336/sad.png';
+                moodIconContainer.style.backgroundColor = 'rgba(244, 67, 54, 0.15)';
+                document.documentElement.style.setProperty('--accent-color', '#f44336');
+            } else if (value < 70) {
+                moodText.textContent = 'Орташа!';
+                moodIcon.src = 'https://img.icons8.com/fluency-systems-filled/96/ffc107/neutral-emoticon.png';
+                moodIconContainer.style.backgroundColor = 'rgba(255, 193, 7, 0.15)';
+                document.documentElement.style.setProperty('--accent-color', '#ffc107');
+            } else {
+                moodText.textContent = 'Керемет!';
+                moodIcon.src = 'https://img.icons8.com/fluency-systems-filled/96/00c8a1/wink.png';
+                moodIconContainer.style.backgroundColor = 'rgba(0, 200, 161, 0.15)';
+                document.documentElement.style.setProperty('--accent-color', '#00c8a1');
+            }
+            
+            // Слайдер фонын жаңарту
+            updateSliderBackground(value);
+        });
+    
+        continueBtn.addEventListener('click', () => {
+            window.location.href = 'home.html';
+        });
+    </script>
+</body>
+</html>

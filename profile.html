@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="nav.css">   <!-- Навигация панелі -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 15px auto;
+            padding: 15px;
+        }
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #12594D;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 40px;
+            border: 4px solid #e6e6e6;
+        }
+        
+        .profile-info h1 {
+            color: #12594D;
+            margin: 0 0 8px 0;
+            font-size: 24px;
+        }
+        
+        .profile-info p {
+            color: #666;
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px 10px;
+            flex: 1;
+            min-width: 80px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            margin: 0 0 8px 0;
+            color: #12594D;
+            font-size: 14px;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .profile-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-section h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #12594D;
+            border-bottom: 2px solid #12594D;
+            padding-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .progress-item {
+            margin-bottom: 15px;
+        }
+        
+        .progress-item h4 {
+            margin: 0 0 5px 0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e6e6e6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #12594D;
+            border-radius: 4px;
+        }
+        
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .badge {
+            text-align: center;
+            width: 80px;
+        }
+        
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #12594D;
+        }
+        
+        .badge-icon.earned {
+            background-color: #12594D;
+            color: white;
+        }
+        
+        .badge p {
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        /* Improved Mobile Responsiveness */
+        @media (min-width: 768px) {
+            .profile-header {
+                flex-direction: row;
+                text-align: left;
+            }
+            
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                margin-right: 25px;
+                margin-bottom: 0;
+                font-size: 50px;
+            }
+            
+            .profile-info h1 {
+                font-size: 28px;
+            }
+            
+            .profile-info p {
+                font-size: 16px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+            }
+            
+            .stat-card h3 {
+                font-size: 16px;
+            }
+            
+            .stat-card p {
+                font-size: 24px;
+            }
+            
+            .profile-section {
+                padding: 20px;
+            }
+            
+            .profile-section h2 {
+                font-size: 22px;
+            }
+            
+            .progress-item h4 {
+                font-size: 16px;
+            }
+            
+            .progress-bar {
+                height: 10px;
+            }
+            
+            .badge {
+                width: 100px;
+            }
+            
+            .badge-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 30px;
+            }
+        }
+        
+        /* Extra Small Screens */
+        @media (max-width: 320px) {
+            .profile-container {
+                padding: 10px;
+            }
+            
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+            
+            .profile-info h1 {
+                font-size: 20px;
+            }
+            
+            .stat-card {
+                min-width: 70px;
+                padding: 10px 5px;
+            }
+            
+            .stat-card h3 {
+                font-size: 12px;
+            }
+            
+            .stat-card p {
+                font-size: 16px;
+            }
+            
+            .badge {
+                width: 70px;
+            }
+            
+            .badge-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1>Қолданушы Аты</h1>
+                <p>student@biology.kz</p>
+                <p><i class="fas fa-medal" style="color: #12594D;"></i> Бастауыш деңгей</p>
+            </div>
+        </div>
+        
+        <div class="profile-stats">
+            <div class="stat-card">
+                <h3>Сабақтар</h3>
+                <p>3/10</p>
+            </div>
+            <div class="stat-card">
+                <h3>Тесттер</h3>
+                <p>2/5</p>
+            </div>
+            <div class="stat-card">
+                <h3>Жетістіктер</h3>
+                <p>4</p>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h2>Оқу үдерісі</h2>
+            <div class="progress-item">
+                <h4>
+                    <span>Жасуша құрылымы</span>
+                    <span>100%</span>
+                </h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <h4>
+                    <span>Генетика</span>
+                    <span>75%</span>
+                </h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <h4>
+                    <span>Адам анатомиясы</span>
+                    <span>30%</span>
+                </h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 30%;"></div>
+                </div>
+            </div>
+            <div class="progress-item">
+                <h4>
+                    <span>Эволюция</span>
+                    <span>0%</span>
+                </h4>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h2>Жетістіктер</h2>
+            <div class="badge-container">
+                <div class="badge">
+                    <div class="badge-icon earned">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>Бірінші қадам</p>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon earned">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <p>Білім іздеуші</p>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon earned">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <p>Тест жеңімпазы</p>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon earned">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <p>Жасуша эксперті</p>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <p>Генетика шебері</p>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <p>Анатомия білгірі</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="bottom-nav">
+        <div class="nav-btn">
+            <a href="home.html">
+                <i class="fas fa-home icon"></i>
+                <span class="label">Home</span>
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="video.html">
+                <i class="fas fa-video icon"></i>
+                <span class="label">Video</span>
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="chat.html">
+                <i class="fas fa-comment-dots icon"></i>
+                <span class="label">Chat</span>
+            </a>
+        </div>
+        <div class="nav-btn active">
+            <a href="profile.html">
+                <i class="fas fa-user icon"></i>
+                <!-- <span class="label">Profile</span> -->
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

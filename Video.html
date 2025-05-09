@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видео сабақтар</title>
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 90px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        /* Курс карточкалары */
+        .courses-row {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0;
+            scroll-snap-type: x mandatory;
+            margin-bottom: 20px;
+        }
+        
+        .course-card {
+            min-width: 250px;
+            border-radius: 15px;
+            background-color: white;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            cursor: pointer;
+            scroll-snap-align: start;
+            border: 3px solid transparent;
+        }
+        
+        .course-card.active {
+            border-color: #12594D;
+        }
+        
+        .course-image {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .course-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+        
+        .course-title {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+            font-size: 18px;
+            z-index: 2;
+        }
+        
+        .course-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background-color: #e0e0e0;
+            margin: 0 15px 15px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #12594D;
+            border-radius: 3px;
+            width: 25%; /* По умолчанию */
+        }
+        
+        /* Сабақтар тізімі */
+        .lessons-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .lessons-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #12594D;
+        }
+        
+        .lessons-title i {
+            margin-right: 10px;
+        }
+        
+        .lessons-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .lesson-list {
+            display: none; /* По умолчанию скрыто */
+        }
+        
+        .lesson-list.active {
+            display: block;
+        }
+        
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .lesson-status {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .completed {
+            background-color: #4CAF50;
+        }
+        
+        .in-progress {
+            background-color: #FF9800;
+        }
+        
+        .not-started {
+            background-color: #9E9E9E;
+        }
+        
+        .lesson-content {
+            flex: 1;
+        }
+        
+        .lesson-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .lesson-duration {
+            font-size: 12px;
+            color: #666;
+        }
+        
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Курстар қатары -->
+        <div class="courses-row">
+            <div class="course-card active" data-course="cell-biology">
+                <div class="course-image" style="background-image: url('https://www.euroschoolindia.com/blogs/wp-content/uploads/2024/09/A-Journey-into-Cell-Biology.jpg.jpg');">
+                    <div class="course-title">Жасуша биологиясы</div>
+                </div>
+                <div class="course-stats">
+                    <span>32 Сабақ</span>
+                    <span>20 Сағат</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 25%"></div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-course="genetics">
+                <div class="course-image" style="background-image: url('https://d2jx2rerrg6sh3.cloudfront.net/images/news/ImageForNews_730480_16679535270477610.jpg');">
+                    <div class="course-title">Генетика негіздері</div>
+                </div>
+                <div class="course-stats">
+                    <span>28 Сабақ</span>
+                    <span>18 Сағат</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10%"></div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-course="anatomy">
+                <div class="course-image" style="background-image: url('https://ischoolconnect.com/blog/wp-content/uploads/2022/09/anatomy.jpg');">
+                    <div class="course-title">Адам анатомиясы</div>
+                </div>
+                <div class="course-stats">
+                    <span>30 Сабақ</span>
+                    <span>22 Сағат</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 5%"></div>
+                </div>
+            </div>
+            
+            <div class="course-card" data-course="ecology">
+                <div class="course-image" style="background-image: url('https://unity.edu/wp-content/uploads/2024/08/Environmental-Science-vs.-Ecology-2-scaled-1.jpg');">
+                    <div class="course-title">Экология</div>
+                </div>
+                <div class="course-stats">
+                    <span>25 Сабақ</span>
+                    <span>16 Сағат</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Жасуша биологиясы сабақтары -->
+        <div class="lessons-container">
+            <div class="lessons-title">
+                <i class="fas fa-check-circle"></i>
+                <span>Барлық Жасуша биологиясы сабақтары</span>
+            </div>
+            <div class="lessons-subtitle">
+                Бұл курста 32 сабақ бар, 8 сабақ аяқталды
+            </div>
+            
+            <div class="lesson-list active" id="cell-biology-lessons">
+                <a href="video_lessons/cell_intro.html" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Жасуша дегеніміз не?</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+                
+                <a href="video_lessons/cell_structure.html" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Жасуша құрылымдары</div>
+                        <div class="lesson-duration">10 минут</div>
+                    </div>
+                </a>
+                
+                <a href="video_lessons/mitochondria.html" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Митохондрия функциялары</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Жасуша бөліну циклы</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status in-progress">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Жасуша мембранасы</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Ядро функциялары</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Клеткалық тыныс алу</div>
+                        <div class="lesson-duration">56 минут</div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Генетика негіздері сабақтары -->
+            <div class="lesson-list" id="genetics-lessons">
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">ДНҚ құрылымы</div>
+                        <div class="lesson-duration">50 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Мендель заңдары</div>
+                        <div class="lesson-duration">45 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status in-progress">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Тұқым қуалаудың негізгі принциптері</div>
+                        <div class="lesson-duration">60 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Ген экспрессиясы</div>
+                        <div class="lesson-duration">55 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Мутациялар және генетикалық аурулар</div>
+                        <div class="lesson-duration">65 минут</div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Адам анатомиясы сабақтары -->
+            <div class="lesson-list" id="anatomy-lessons">
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Адам ағзасына кіріспе</div>
+                        <div class="lesson-duration">40 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status in-progress">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Жүрек-қан тамыр жүйесі</div>
+                        <div class="lesson-duration">55 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Тыныс алу жүйесі</div>
+                        <div class="lesson-duration">50 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Нерв жүйесі</div>
+                        <div class="lesson-duration">60 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Ас қорыту жүйесі</div>
+                        <div class="lesson-duration">45 минут</div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Экология сабақтары -->
+            <div class="lesson-list" id="ecology-lessons">
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Экожүйе дегеніміз не?</div>
+                        <div class="lesson-duration">45 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Тағамдық тізбектер</div>
+                        <div class="lesson-duration">50 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Биоалуантүрлілік</div>
+                        <div class="lesson-duration">55 минут</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="lesson-item">
+                    <div class="lesson-status not-started">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lesson-content">
+                        <div class="lesson-title">Климаттың өзгеруі</div>
+                        <div class="lesson-duration">60 минут</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Навигация -->
+    <div class="bottom-nav">
+        <div class="nav-btn">
+            <a href="home.html">
+                <i class="fas fa-home icon"></i>
+                <span class="label">Home</span>
+            </a>
+        </div>
+        <div class="nav-btn active">
+            <a href="video.html">
+                <i class="fas fa-video icon"></i>
+                <!-- <span class="label">Video</span> -->
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="chat.html">
+                <i class="fas fa-comment-dots icon"></i>
+                <span class="label">Chat</span>
+            </a>
+        </div>
+        <div class="nav-btn inactive">
+            <a href="profile.html">
+                <i class="fas fa-user icon"></i>
+                <span class="label">Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Курс карточкаларын басқан кезде сәйкес сабақтар тізімін көрсету
+        const courseCards = document.querySelectorAll('.course-card');
+        const lessonLists = document.querySelectorAll('.lesson-list');
+        const lessonsTitle = document.querySelector('.lessons-title span');
+        const lessonsSubtitle = document.querySelector('.lessons-subtitle');
+        
+        courseCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Барлық карточкалардан active класын алып тастау
+                courseCards.forEach(c => c.classList.remove('active'));
+                
+                // Басылған карточкаға active класын қосу
+                this.classList.add('active');
+                
+                // Курс атын алу
+                const courseName = this.dataset.course;
+                
+                // Тақырыпты өзгерту
+                const courseTitle = this.querySelector('.course-title').textContent;
+                lessonsTitle.textContent = `Барлық ${courseTitle} сабақтары`;
+                
+                // Бүкіл сабақтар тізімін жасыру
+                lessonLists.forEach(list => list.classList.remove('active'));
+                
+                // Сәйкес сабақтар тізімін көрсету
+                document.getElementById(`${courseName}-lessons`).classList.add('active');
+                
+                // Курс прогресін өзгерту
+                const stats = {
+                    'cell-biology': { total: 32, completed: 8 },
+                    'genetics': { total: 28, completed: 3 },
+                    'anatomy': { total: 30, completed: 1 },
+                    'ecology': { total: 25, completed: 0 }
+                };
+                
+                lessonsSubtitle.textContent = `Бұл курста ${stats[courseName].total} сабақ бар, ${stats[courseName].completed} сабақ аяқталды`;
+            });
+        });
+    </script>
+</body>
+</html>

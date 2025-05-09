@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Митохондрия функциялары - Видео сабақ</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="../video_lesson.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 90px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #12594D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .video-container {
+            width: 100%;
+            background-color: #000;
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 230px;
+            display: block;
+        }
+        
+        .lesson-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .lesson-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 20px;
+            color: #12594D;
+            margin-bottom: 5px;
+        }
+        
+        .info-item span {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .content-block {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .content-block h2 {
+            color: #12594D;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .content-block h3 {
+            color: #333;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .content-block p {
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        
+        .content-block ul, .content-block ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .content-block li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            color: #444;
+        }
+        
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .image-caption {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .step-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .step-box {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            width: calc(50% - 20px);
+            min-width: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .step-box h4 {
+            margin-top: 0;
+            color: #12594D;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .question p {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .show-answer-btn {
+            background-color: #12594D;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #12594D;
+            color: #444;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background-color: #12594D;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .prev-button i {
+            margin-right: 5px;
+        }
+        
+        .next-button i {
+            margin-left: 5px;
+        }
+        /* Floating buttons */
+        .floating-btn {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .floating-btn i {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .chat-btn {
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        
+        @media (min-width: 768px) {
+            .video-container iframe {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../Video.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        <h1>Митохондрия функциялары</h1>
+    </div>
+    
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/7o0NkKez1AY" title="Митохондрия функциялары" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <div class="lesson-content">
+        <div class="lesson-info">
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>56 минут</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>18.05.2023</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Аяқталды</span>
+            </div>
+        </div>
+        
+        <div class="content-block">
+            <h2>Сабақ конспектісі: Митохондрия функциялары</h2>
+            
+            <p>
+                Митохондриялар — эукариотты жасушаларда кездесетін, екі қабатты мембранамен қоршалған "жасуша электр станциялары" деп аталатын маңызды органоидтар. Олар жасушаның энергетикалық метаболизмінде ерекше рөл атқарады.
+            </p>
+            
+            <div class="image-container">
+                <img src="https://indicator.ru/thumb/640x0/filters:quality(75)/imgs/2019/08/13/13/3515051/ce0f0f1a3f2f4c58c43464c7d5ec0cc3e9004727.png" alt="Митохондрия құрылымы">
+                <div class="image-caption">Митохондрияның құрылымы</div>
+            </div>
+            
+            <h3>1. Митохондрия құрылымы</h3>
+            <p>
+                Митохондрияның құрылымы оның қызметімен тығыз байланысты. Оның негізгі бөліктері:
+            </p>
+            
+            <ul>
+                <li><strong>Сыртқы мембрана</strong> — митохондрияны цитоплазмадан бөліп тұрады, көптеген кішкентай протеиндер мен иондар өте алатын тесіктері (порин каналдары) бар</li>
+                <li><strong>Ішкі мембрана</strong> — кристелер деп аталатын қатпарлары бар, тыныс алу тізбегінің ферменттері орналасқан</li>
+                <li><strong>Кристелер</strong> — ішкі мембрананың қатпарлары, ферменттер орналасатын бетті ұлғайтады</li>
+                <li><strong>Матрикс</strong> — ішкі мембрананың ішіндегі сұйықтық, онда митохондриялық ДНҚ, рибосомалар және Кребс циклінің ферменттері орналасқан</li>
+            </ul>
+            
+            <h3>2. Митохондрияның негізгі функциялары</h3>
+            
+            <h4>2.1 Жасушалық тыныс алу және АТФ өндіру</h4>
+            <p>
+                Митохондрияның ең маңызды қызметі — жасушалық тыныс алу процесі арқылы АТФ (аденозинтрифосфат) өндіру. АТФ — жасушадағы энергия тасымалдаушы молекула болып табылады.
+            </p>
+            
+            <div class="step-container">
+                <div class="step-box">
+                    <h4>1. Гликолиз</h4>
+                    <p>Цитоплазмада жүреді (митохондриядан тыс)</p>
+                    <p>Глюкоза → пируват</p>
+                    <p>2 АТФ өндіріледі</p>
+                </div>
+                
+                <div class="step-box">
+                    <h4>2. Пируваттың тотығуы</h4>
+                    <p>Митохондрия матриксінде жүреді</p>
+                    <p>Пируват → ацетил-КоА</p>
+                    <p>CO₂ бөлінеді</p>
+                </div>
+                
+                <div class="step-box">
+                    <h4>3. Кребс циклі</h4>
+                    <p>Митохондрия матриксінде жүреді</p>
+                    <p>Ацетил-КоА → CO₂ + NADH + FADH₂</p>
+                    <p>2 АТФ өндіріледі</p>
+                </div>
+                
+                <div class="step-box">
+                    <h4>4. Электрондар тасымалдау тізбегі</h4>
+                    <p>Ішкі мембранада жүреді</p>
+                    <p>NADH/FADH₂ → H₂O + O₂</p>
+                    <p>34 АТФ өндіріледі</p>
+                </div>
+            </div>
+            
+            <p>
+                Жалпы бір глюкоза молекуласынан аэробты тыныс алу арқылы шамамен 38 АТФ молекуласы өндіріледі.
+            </p>
+            
+            <div class="image-container">
+                <img src="https://cdn-ildfibj.nitrocdn.com/qaWeLntkRcyxNUcEoWbLpZLQkcgLFsiJ/assets/images/optimized/www.thoughtco.com/thmb/dMQGP9dN4bZFjeyHqeyomFuwu-k=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/cellular_respiration-8fcc3f1ad3e54a828dabc02146ce4307.jpg" alt="Жасушалық тыныс алу">
+                <div class="image-caption">Жасушалық тыныс алу процесінің кезеңдері</div>
+            </div>
+            
+            <h4>2.2 Кальций иондарын сақтау және реттеу</h4>
+            <p>
+                Митохондриялар жасушадағы кальций гомеостазын реттеуге қатысады. Олар кальций иондарын (Ca²⁺) сақтай алады және қажет болған кезде жасушаға шығарады.
+            </p>
+            <p>
+                Бұл функция келесі процестерді реттеу үшін маңызды:
+            </p>
+            <ul>
+                <li>Жүйке импульстерінің берілуі</li>
+                <li>Бұлшық ет жиырылуы</li>
+                <li>Ферменттер белсенділігі</li>
+                <li>Жасуша бөлінуін реттеу</li>
+            </ul>
+            
+            <h4>2.3 Апоптоз процесіне қатысу</h4>
+            <p>
+                Митохондриялар бағдарламаланған жасуша өлімі — апоптоз процесінде маңызды рөл атқарады. Жасуша зақымдалған немесе қартайған кезде митохондриялар цитохром C сияқты апоптоз сигналдарын шығарады, бұл жасушаның өлуіне әкеледі.
+            </p>
+            
+            <h4>2.4 Метаболиттік процестерге қатысу</h4>
+            <p>
+                Митохондриялар энергия өндіруден басқа, көптеген метаболиттік процестерге қатысады:
+            </p>
+            <ul>
+                <li>Гем (қанның гемоглобинінің бір бөлігі) синтезі</li>
+                <li>Стероидты гормондар (эстроген, тестостерон) биосинтезі</li>
+                <li>Амин қышқылдарының алмасуы</li>
+                <li>Май қышқылдарының тотығуы</li>
+                <li>Уреа циклі (аммиакты зарарсыздандыру)</li>
+            </ul>
+            
+            <h3>3. Митохондриялық ДНҚ</h3>
+            <p>
+                Митохондриялардың ерекше қасиеті — өздерінің жеке ДНҚ-сы бар болуы. Митохондриялық ДНҚ (мтДНҚ) сақиналы құрылымға ие және ядролық ДНҚ-дан айырмашылығы бар:
+            </p>
+            <ul>
+                <li>мтДНҚ тек анадан балаға беріледі (аналық тұқым қуалау)</li>
+                <li>мтДНҚ шамамен 37 генді кодтайды</li>
+                <li>мтДНҚ-да интрондар жоқ</li>
+                <li>мтДНҚ ядролық ДНҚ-ға қарағанда мутацияларға көбірек ұшырайды</li>
+            </ul>
+            
+            <div class="image-container">
+                <img src="https://www.genome.gov/sites/default/files/tg/en/illustration/mitochondrial_dna.jpg" alt="Митохондриялық ДНҚ">
+                <div class="image-caption">Митохондриялық ДНҚ және оның тұқым қуалауы</div>
+            </div>
+            
+            <h3>4. Митохондриялық аурулар</h3>
+            <p>
+                Митохондриялық функциялардың бұзылуы әр түрлі ауруларға әкелуі мүмкін. Митохондриялық аурулар тұқым қуалауы немесе өмір бойы пайда болуы мүмкін. Бұл аурулар әдетте жоғары энергия қажеттілігі бар мүшелерге әсер етеді:
+            </p>
+            <ul>
+                <li><strong>MELAS синдромы</strong> — митохондриялық энцефаломиопатия, лактат ацидозы және инсульт тәрізді эпизодтар</li>
+                <li><strong>MERRF синдромы</strong> — миоклоникалық эпилепсия мен жыртылған қызыл талшықтар</li>
+                <li><strong>Лебердің тұқым қуалайтын оптикалық нейропатиясы</strong> — көру жүйкесінің зақымдануы</li>
+                <li><strong>Кернс-Сайр синдромы</strong> — көз қимылының бұзылыстары, аз бойлылық</li>
+            </ul>
+            
+            <p>
+                Сонымен қатар, митохондриялық дисфункциялар Паркинсон ауруы, Альцгеймер ауруы, қант диабеті сияқты жалпы дегенеративті ауруларда маңызды рөл атқарады.
+            </p>
+            
+            <h3>5. Митохондрияның эволюциялық шығу тегі</h3>
+            <p>
+                Эндосимбиоз теориясына сәйкес, митохондриялар өз ДНҚ-сы бар еркін өмір сүретін аэробты бактериялардан шыққан. Шамамен 1,5-2 миллиард жыл бұрын бұл бактериялар басқа жасушаға енген, бұл кейінірек симбиотикалық қатынасқа әкелген.
+            </p>
+            <p>
+                Бұл теорияны қолдайтын дәлелдер:
+            </p>
+            <ul>
+                <li>Митохондрияның өзінің ДНҚ-сы бар</li>
+                <li>Митохондриалдық рибосомалар бактериялық рибосомаларға ұқсас</li>
+                <li>Митохондриялар бөліну арқылы көбейеді</li>
+                <li>Митохондриялардың мөлшері бактерияларға ұқсас</li>
+            </ul>
+        </div>
+        
+        <div class="content-block">
+            <h2>Бақылау сұрақтары</h2>
+            
+            <div class="question">
+                <p>1. Митохондрияның негізгі құрылымдық компоненттерін атаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Сыртқы мембрана, ішкі мембрана, кристелер және матрикс.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>2. Жасушалық тыныс алудың 4 негізгі кезеңін атаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    1) Гликолиз, 2) Пируваттың тотығуы, 3) Кребс циклі, 4) Электрондар тасымалдау тізбегі (тыныс алу тізбегі).
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>3. Бір глюкоза молекуласынан аэробты тыныс алу арқылы қанша АТФ өндіріледі?</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Шамамен 38 АТФ молекуласы (соңғы зерттеулерге сәйкес бұл сан 30-32 АТФ аралығында болуы мүмкін).
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>4. Митохондриялық ДНҚ-ның ядролық ДНҚ-дан айырмашылықтарын сипаттаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Митохондриялық ДНҚ: 1) сақиналы құрылымға ие, 2) тек анадан балаға беріледі, 3) шамамен 37 генді кодтайды, 4) интрондары жоқ, 5) мутацияларға көбірек ұшырайды.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>5. Эндосимбиоз теориясы дегеніміз не?</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Эндосимбиоз теориясы — митохондриялар бастапқыда еркін өмір сүретін аэробты бактериялар болған және шамамен 1,5-2 миллиард жыл бұрын басқа жасушаға енген, кейін симбиотикалық қатынас қалыптасқан деген теория.
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="cell_structure.html" class="nav-button prev-button">
+                <i class="fas fa-arrow-left"></i> Алдыңғы сабақ
+            </a>
+            <a href="cell_cycle.html" class="nav-button next-button">
+                Келесі сабақ <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <a href="../chat.html" class="floating-btn chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+
+    <script>
+        // Жауаптарды көрсету/жасыру
+        document.querySelectorAll('.show-answer-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    this.textContent = 'Жауабын көрсету';
+                } else {
+                    answer.style.display = 'block';
+                    this.textContent = 'Жауапты жасыру';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

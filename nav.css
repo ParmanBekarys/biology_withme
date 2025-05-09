@@ -1,0 +1,93 @@
+:root {
+    --primary-color: #12594D;
+    --accent-color: #00c8a1;
+    --text-light: #6A8580;
+}
+
+body {
+    margin: 0;
+    padding-bottom: 90px; /* Навигацияға орын */
+    font-family: sans-serif;
+    background-color: #fff;
+}
+
+/* Төменгі навигация */
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    height: 65px;
+    background-color: #12594D;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    padding: 0 15px;
+}
+
+/* Навигация баттоны */
+.nav-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 45px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 5px;
+}
+
+.nav-btn a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    color: var(--text-light);
+}
+
+.nav-btn.inactive a {
+    color: var(--text-light);
+}
+
+.nav-btn.active {
+    background-color: var(--primary-color);
+}
+
+.nav-btn.active a {
+    color: rgb(255, 255, 255);
+}
+
+/* Иконка */
+.nav-btn .icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+    transition: all 0.3s;
+}
+
+/* Текст */
+.nav-btn .label {
+    font-size: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    opacity: 0.8;
+}
+
+.nav-btn.active .icon {
+    transform: translateY(-2px);
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+}
+
+.content {
+    padding: 20px;
+}

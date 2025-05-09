@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зоология - Тест</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #12594D;
+            --accent-color: #FFC107;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-bottom: 90px;
+        }
+
+        /* Header styles */
+        .header {
+            background-color: #E3CE81;
+            color: #333;
+            padding: 40px 20px 80px;
+            position: relative;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/BiologyWithMe/images/зоология.jpg') center center;
+            background-size: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .test-badge {
+            background: rgba(51, 51, 51, 0.1);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .header-meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .header-meta-item i {
+            margin-right: 8px;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 800px;
+            margin: -50px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .content-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .content-text p {
+            margin-bottom: 15px;
+        }
+
+        .content-text ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .content-text li {
+            margin-bottom: 8px;
+        }
+
+        .content-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .video-container {
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .test-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: var(--accent-color);
+            color: #333;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .test-btn i {
+            margin-left: 8px;
+        }
+
+        /* Floating buttons */
+        .floating-btn {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .floating-btn i {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .chat-btn {
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px 70px;
+            }
+            
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .content-text {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <a href="../home.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Артқа
+            </a>
+            <div class="test-badge">Орташа деңгей</div>
+            <h1>Зоология</h1>
+            <div class="header-meta">
+                <div class="header-meta-item">
+                    <i class="fas fa-question-circle"></i> 20 сұрақ
+                </div>
+                <div class="header-meta-item">
+                    <i class="fas fa-users"></i> 856 студент
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <h2 class="section-title">Зоология негіздері</h2>
+            <div class="content-text">
+                <p>
+                    Зоология — жануарлар туралы ғылым. Бұл пән жануарлардың құрылысын, дамуын, таралуын және олардың 
+                    экологиялық қатынастарын зерттейді.
+                </p>
+                <p>
+                    Зоология келесі негізгі бөлімдерге бөлінеді:
+                </p>
+                <ul>
+                    <li><strong>Омыртқасыздар зоологиясы</strong> — қарапайымдылар, губкалар, ішек қуыстылар, құрттар, моллюскалар, буын аяқтылар сияқты омыртқасыз жануарларды зерттейді.</li>
+                    <li><strong>Омыртқалылар зоологиясы</strong> — балықтар, амфибиялар, рептилиялар, құстар және сүтқоректілер сияқты хордалы жануарларды зерттейді.</li>
+                    <li><strong>Этология</strong> — жануарлардың мінез-құлқын зерттейді.</li>
+                    <li><strong>Экология</strong> — жануарлардың қоршаған ортамен өзара қарым-қатынасын зерттейді.</li>
+                </ul>
+
+                <p>
+                    Зоология ғылымы адамзатқа жануарлар әлемінің әртүрлілігін, эволюциясын түсініп, табиғат қорғау шараларын әзірлеуге мүмкіндік береді.
+                </p>
+
+                <div style="text-align: center;">
+                    <a class="test-btn" href="quiz/zoology-quiz.html">
+                        Тестті бастау <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating buttons -->
+    <a href="../home.html" class="floating-btn home-btn">
+        <i class="fas fa-home"></i>
+    </a>
+    <a href="../chat.html" class="floating-btn chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+</body>
+
+</html>

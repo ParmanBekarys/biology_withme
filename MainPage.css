@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    padding-bottom: 90px; /* Навигацияға орын */
+    font-family: sans-serif;
+    background-color: #fff;
+}
+
+/* Төменгі навигация */
+.bottom-nav {
+    position: fixed;
+    bottom: 15px; /* Экран астына сәл жетпей тұрады */
+    left: 20px;
+    right: 20px;
+    height: 60px;
+    background-color: #12594D;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Навигация баттоны */
+.nav-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #6A8580; /* Сұр түс */
+    cursor: pointer;
+    transition: 0.3s ease;
+    position: relative;
+    border-radius: 20px;
+    text-decoration: none; /* Сілтеменің астын сызуды алып тастау */
+    background-color: transparent; /* Артындағы фонды алып тастау */
+}
+
+/* Активті баттон */
+.nav-btn.active {
+    color: #00A085; /* Жасыл түс */
+    background-color: #12594D; /* Жасыл түс */
+}
+
+/* Баттонды баспаған кезде сұр түс */
+.nav-btn.inactive {
+    color: #6A8580; /* Сұр түс */
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Иконка */
+.nav-btn .icon {
+    font-size: 18px; /* Иконка кішірейтілді */
+    margin-right: 6px;
+    color: #6A8580;
+}
+
+
+/* Текст */
+.nav-btn .label {
+    opacity: 0;
+    transition: 0.3s ease;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 14px; /* Текст кішірейтілді */
+    color: #6A8580;
+    text-decoration: none;
+}
+
+.nav-btn.active .label {
+    opacity: 1;
+    color: #00C8A6;
+    text-decoration: none;
+}
+.nav-btn.active .icon {
+    color: #00C8A6;
+}
+
+.nav-btn.inactive .label {
+    display: none;
+}
+
+.nav-btn a {
+    text-decoration: none;
+}
+/* Навигация баттондарын стильдеу */
+.nav-btn:hover {
+    color: #00C8A6; /* Баттонға өтіп келген кезде түс өзгереді */
+}
+
+.nav-btn:active {
+    color: #00C8A6; /* Баттонды басқанда түс өзгереді */
+}
+
+.content {
+    padding: 20px;
+}

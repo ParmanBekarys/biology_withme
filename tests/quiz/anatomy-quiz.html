@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Анатомия Тесті</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #12594D;
+      --accent-color: #4CAF50;
+      --text-color: #333;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --correct-color: #4CAF50;
+      --wrong-color: #F44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .quiz-header h1 {
+      color: var(--primary-color);
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .quiz-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .quiz-info-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .quiz-info-item i {
+      margin-right: 8px;
+      color: var(--accent-color);
+    }
+
+    .progress-container {
+      margin-bottom: 30px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-color);
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .question {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .question:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .question p {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .answer-option {
+      position: relative;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option:hover {
+      background-color: #e9e9e9;
+    }
+
+    .answer-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .answer-option label {
+      display: block;
+      padding-left: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    .answer-option label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #999;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option input[type="radio"]:checked + label:before {
+      border-color: var(--accent-color);
+      background-color: var(--accent-color);
+    }
+
+    .answer-option input[type="radio"]:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: white;
+    }
+
+    .answer-option.correct {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--correct-color);
+    }
+
+    .answer-option.wrong {
+      background-color: rgba(244, 67, 54, 0.1);
+      border: 1px solid var(--wrong-color);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: white;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #444;
+    }
+
+    .btn i {
+      margin-right: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #result {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 30px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .result-score {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .result-message {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      
+      .question p {
+        font-size: 16px;
+      }
+      
+      .answer-option {
+        padding: 12px;
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Анатомия Тесті</h1>
+      <div class="quiz-info">
+        <div class="quiz-info-item">
+          <i class="fas fa-question-circle"></i>
+          <span>10 сұрақ</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-clock"></i>
+          <span>3 минут</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-chart-bar"></i>
+          <span>Жеңіл деңгей</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text">
+        <span id="currentQuestion">0 / 10 сұрақ аяқталды</span>
+        <span id="timeLeft">3:00</span>
+      </div>
+    </div>
+
+    <form id="quizForm">
+      <div class="question">
+        <p>1. Адам денесінде неше сүйек бар?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q1a" name="q1" value="A">
+            <label for="q1a">A) 205</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1b" name="q1" value="B">
+            <label for="q1b">B) 206</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1c" name="q1" value="C">
+            <label for="q1c">C) 210</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1d" name="q1" value="D">
+            <label for="q1d">D) 201</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>2. Жүрек қандай бұлшықеттен тұрады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q2a" name="q2" value="A">
+            <label for="q2a">A) Тегіс</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2b" name="q2" value="B">
+            <label for="q2b">B) Қаңқалық</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2c" name="q2" value="C">
+            <label for="q2c">C) Жолақты</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2d" name="q2" value="D">
+            <label for="q2d">D) Жүректік</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>3. Қан қандай ұлпаға жатады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q3a" name="q3" value="A">
+            <label for="q3a">A) Бұлшықет</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3b" name="q3" value="B">
+            <label for="q3b">B) Эпителий</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3c" name="q3" value="C">
+            <label for="q3c">C) Дәнекер</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3d" name="q3" value="D">
+            <label for="q3d">D) Жүйке</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>4. Жүрек неше қуыстан тұрады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q4a" name="q4" value="A">
+            <label for="q4a">A) 2</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4b" name="q4" value="B">
+            <label for="q4b">B) 3</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4c" name="q4" value="C">
+            <label for="q4c">C) 4</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4d" name="q4" value="D">
+            <label for="q4d">D) 5</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>5. Омыртқа бағанында неше омыртқа бар?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q5a" name="q5" value="A">
+            <label for="q5a">A) 32</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5b" name="q5" value="B">
+            <label for="q5b">B) 34</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5c" name="q5" value="C">
+            <label for="q5c">C) 33-34</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5d" name="q5" value="D">
+            <label for="q5d">D) 30</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>6. Адам денесінде қанша бұлшықет бар?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q6a" name="q6" value="A">
+            <label for="q6a">A) 650</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6b" name="q6" value="B">
+            <label for="q6b">B) 600</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6c" name="q6" value="C">
+            <label for="q6c">C) 639</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6d" name="q6" value="D">
+            <label for="q6d">D) 700</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>7. Адамның ең үлкен органы қандай?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q7a" name="q7" value="A">
+            <label for="q7a">A) Жүрек</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7b" name="q7" value="B">
+            <label for="q7b">B) Бауыр</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7c" name="q7" value="C">
+            <label for="q7c">C) Ми</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7d" name="q7" value="D">
+            <label for="q7d">D) Тері</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>8. Қан айналым жүйесінің негізгі мүшесі қандай?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q8a" name="q8" value="A">
+            <label for="q8a">A) Өкпе</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8b" name="q8" value="B">
+            <label for="q8b">B) Жүрек</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8c" name="q8" value="C">
+            <label for="q8c">C) Бауыр</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8d" name="q8" value="D">
+            <label for="q8d">D) Қан</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>9. Адамның миында қанша нейрон бар?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q9a" name="q9" value="A">
+            <label for="q9a">A) 50 миллиард</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9b" name="q9" value="B">
+            <label for="q9b">B) 10 миллиард</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9c" name="q9" value="C">
+            <label for="q9c">C) 100 миллиард</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9d" name="q9" value="D">
+            <label for="q9d">D) 1 миллиард</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="question">
+        <p>10. Қанша сүт безі әйелдерде болады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q10a" name="q10" value="A">
+            <label for="q10a">A) 2</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10b" name="q10" value="B">
+            <label for="q10b">B) 4</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10c" name="q10" value="C">
+            <label for="q10c">C) 6</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10d" name="q10" value="D">
+            <label for="q10d">D) 8</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <a href="../../tests/test1.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Артқа
+        </a>
+        <button type="button" class="btn btn-primary" onclick="checkAnswers()">
+          <i class="fas fa-check-circle"></i> Нәтижені көру
+        </button>
+      </div>
+    </form>
+
+    <div id="result">
+      <div class="result-title">Тест нәтижесі</div>
+      <div class="result-score"><span id="score">0</span>/10</div>
+      <div class="result-message" id="resultMessage">Жақсы жұмыс!</div>
+      <div class="result-actions">
+        <a href="anatomy-quiz.html" class="btn btn-secondary">
+          <i class="fas fa-redo"></i> Қайта тапсыру
+        </a>
+        <a href="../../home.html" class="btn btn-primary">
+          <i class="fas fa-home"></i> Басты бет
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Дұрыс жауаптар
+    const correctAnswers = {
+      'q1': 'B',  // 206
+      'q2': 'D',  // Жүректік
+      'q3': 'C',  // Дәнекер
+      'q4': 'C',  // 4
+      'q5': 'C',  // 33-34
+      'q6': 'C',  // 639
+      'q7': 'D',  // Тері
+      'q8': 'B',  // Жүрек
+      'q9': 'C',  // 100 миллиард
+      'q10': 'A'  // 2
+    };
+
+    // Прогресс жолағын жаңарту
+    function updateProgress() {
+      const questions = document.querySelectorAll('.question');
+      let answered = 0;
+
+      questions.forEach(question => {
+        const name = question.querySelector('input[type="radio"]').name;
+        if (document.querySelector(`input[name="${name}"]:checked`)) {
+          answered++;
+        }
+      });
+
+      const progressFill = document.getElementById('progressFill');
+      const progress = (answered / questions.length) * 100;
+      progressFill.style.width = `${progress}%`;
+
+      document.getElementById('currentQuestion').textContent = `${answered} / ${questions.length} сұрақ аяқталды`;
+    }
+
+    // Радио батырмаларға оқиғаларды қосу
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', updateProgress);
+    });
+
+    // Таймер
+    let minutes = 3;
+    let seconds = 0;
+    
+    function startTimer() {
+      const interval = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(interval);
+            checkAnswers();
+            return;
+          }
+          minutes--;
+          seconds = 59;
+        } else {
+          seconds--;
+        }
+        
+        document.getElementById('timeLeft').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      }, 1000);
+    }
+
+    // Тест нәтижесін тексеру
+    function checkAnswers() {
+      let score = 0;
+      let totalQuestions = 10;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const question = `q${i}`;
+        const selectedAnswer = document.querySelector(`input[name="${question}"]:checked`);
+        
+        if (selectedAnswer) {
+          const selectedValue = selectedAnswer.value;
+          
+          if (selectedValue === correctAnswers[question]) {
+            score++;
+            selectedAnswer.closest('.answer-option').classList.add('correct');
+          } else {
+            selectedAnswer.closest('.answer-option').classList.add('wrong');
+            
+            // Дұрыс жауапты көрсету
+            const correctOption = document.querySelector(`input[name="${question}"][value="${correctAnswers[question]}"]`);
+            if (correctOption) {
+              correctOption.closest('.answer-option').classList.add('correct');
+            }
+          }
+        }
+      }
+
+      // Нәтижені көрсету
+      document.getElementById('score').textContent = score;
+      document.getElementById('result').style.display = 'block';
+
+      // Кері байланыс хабарламасы
+      let message = '';
+      if (score === 10) {
+        message = 'Тамаша! Барлық жауаптар дұрыс!';
+      } else if (score >= 7) {
+        message = 'Жақсы нәтиже! Тақырыпты жақсы меңгергенсіз.';
+      } else if (score >= 5) {
+        message = 'Орташа нәтиже. Тақырыпты қайта қарап шығыңыз.';
+      } else {
+        message = 'Нәтиже төмен. Материалды қайта оқып шығуды ұсынамыз.';
+      }
+      document.getElementById('resultMessage').textContent = message;
+
+      // Скрольдау
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Бет жүктелгенде прогресс жолағын және таймерді іске қосу
+    window.onload = function() {
+      updateProgress();
+      startTimer();
+    };
+  </script>
+</body>
+</html>

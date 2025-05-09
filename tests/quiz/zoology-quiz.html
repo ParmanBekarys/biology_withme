@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зоология Тесті</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #FF5722;
+      --accent-color: #FF9800;
+      --text-color: #333;
+      --light-bg: #f8f9fa;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --correct-color: #4CAF50;
+      --wrong-color: #F44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      padding-bottom: 90px;
+    }
+
+    .quiz-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .quiz-header h1 {
+      color: var(--primary-color);
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .quiz-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 15px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .quiz-info-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .quiz-info-item i {
+      margin-right: 8px;
+      color: var(--accent-color);
+    }
+
+    .progress-container {
+      margin-bottom: 30px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-color);
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .question {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .question:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .question p {
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .answer-option {
+      position: relative;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option:hover {
+      background-color: #e9e9e9;
+    }
+
+    .answer-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .answer-option label {
+      display: block;
+      padding-left: 30px;
+      position: relative;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    .answer-option label:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #999;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+    }
+
+    .answer-option input[type="radio"]:checked + label:before {
+      border-color: var(--accent-color);
+      background-color: var(--accent-color);
+    }
+
+    .answer-option input[type="radio"]:checked + label:after {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: white;
+    }
+
+    .answer-option.correct {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--correct-color);
+    }
+
+    .answer-option.wrong {
+      background-color: rgba(244, 67, 54, 0.1);
+      border: 1px solid var(--wrong-color);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: white;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #444;
+    }
+
+    .btn i {
+      margin-right: 8px;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #result {
+      background-color: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 30px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+
+    .result-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .result-score {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent-color);
+      margin-bottom: 20px;
+    }
+
+    .result-message {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+    }
+
+    .result-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .quiz-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      
+      .question p {
+        font-size: 16px;
+      }
+      
+      .answer-option {
+        padding: 12px;
+      }
+      
+      .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Зоология Тесті</h1>
+      <div class="quiz-info">
+        <div class="quiz-info-item">
+          <i class="fas fa-question-circle"></i>
+          <span>20 сұрақ</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-clock"></i>
+          <span>5 минут</span>
+        </div>
+        <div class="quiz-info-item">
+          <i class="fas fa-trophy"></i>
+          <span>100 ұпай</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timer-container">
+      <div class="timer" id="timer">05:00</div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text">
+        <span id="currentQuestion">1</span>
+        <span>/ 20 сұрақ</span>
+      </div>
+    </div>
+
+    <form id="quizForm">
+      <!-- Question 1 -->
+      <div class="question">
+        <p>1. Жануарлардың дене құрылысының негізгі белгілері</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q1a" name="q1" value="A">
+            <label for="q1a">A) Қабықша, ядро, цитоплазма</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1b" name="q1" value="B">
+            <label for="q1b">B) Жасыл пластид, целлюлоза</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1c" name="q1" value="C">
+            <label for="q1c">C) Жіпшелер, хлорофилл</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q1d" name="q1" value="D">
+            <label for="q1d">D) Ұлпалар, мүшелер, жүйелер</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question">
+        <p>2. Омыртқасыз жануарлар қандай топқа жатады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q2a" name="q2" value="A">
+            <label for="q2a">A) Құстар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2b" name="q2" value="B">
+            <label for="q2b">B) Қосмекенділер</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2c" name="q2" value="C">
+            <label for="q2c">C) Балықтар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q2d" name="q2" value="D">
+            <label for="q2d">D) Жәндіктер</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question">
+        <p>3. Бунақденелілердің негізгі ерекшелігі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q3a" name="q3" value="A">
+            <label for="q3a">A) Жабынды қауырсын</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3b" name="q3" value="B">
+            <label for="q3b">B) Қанаттары жоқ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3c" name="q3" value="C">
+            <label for="q3c">C) 6 аяғы бар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q3d" name="q3" value="D">
+            <label for="q3d">D) Қабыршақпен жабылған</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question">
+        <p>4. Қосмекенділердің көбеюі қалай жүреді?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q4a" name="q4" value="A">
+            <label for="q4a">A) Құрлықта жұмыртқа салады</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4b" name="q4" value="B">
+            <label for="q4b">B) Ұрық іште дамиды</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4c" name="q4" value="C">
+            <label for="q4c">C) Суда жұмыртқа салады</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q4d" name="q4" value="D">
+            <label for="q4d">D) Тікелей даму арқылы</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question">
+        <p>5. Қай жануар желбезекпен тыныс алады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q5a" name="q5" value="A">
+            <label for="q5a">A) Құрбақа</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5b" name="q5" value="B">
+            <label for="q5b">B) Жылан</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5c" name="q5" value="C">
+            <label for="q5c">C) Құрт</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q5d" name="q5" value="D">
+            <label for="q5d">D) Балық</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question">
+        <p>6. Буынаяқтыларға жататын жануар:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q6a" name="q6" value="A">
+            <label for="q6a">A) Шаян</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6b" name="q6" value="B">
+            <label for="q6b">B) Құрт</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6c" name="q6" value="C">
+            <label for="q6c">C) Құрбақа</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q6d" name="q6" value="D">
+            <label for="q6d">D) Жылан</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 7 -->
+      <div class="question">
+        <p>7. Қанайналым жүйесі бар омыртқасыз:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q7a" name="q7" value="A">
+            <label for="q7a">A) Медуза</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7b" name="q7" value="B">
+            <label for="q7b">B) Жауын құрты</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7c" name="q7" value="C">
+            <label for="q7c">C) Кене</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q7d" name="q7" value="D">
+            <label for="q7d">D) Тасбақа</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 8 -->
+      <div class="question">
+        <p>8. Омыртқалы жануарлар қатарына жатады:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q8a" name="q8" value="A">
+            <label for="q8a">A) Қоңыз</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8b" name="q8" value="B">
+            <label for="q8b">B) Балық</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8c" name="q8" value="C">
+            <label for="q8c">C) Медуза</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q8d" name="q8" value="D">
+            <label for="q8d">D) Шаян</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 9 -->
+      <div class="question">
+        <p>9. Құстардың ерекшелігі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q9a" name="q9" value="A">
+            <label for="q9a">A) Терісі жалаңаш</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9b" name="q9" value="B">
+            <label for="q9b">B) Денесі жүнмен жабылған</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9c" name="q9" value="C">
+            <label for="q9c">C) Денесі қауырсынмен жабылған</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q9d" name="q9" value="D">
+            <label for="q9d">D) Терісі қабыршақпен жабылған</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 10 -->
+      <div class="question">
+        <p>10. Сүтқоректілердің көбеюі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q10a" name="q10" value="A">
+            <label for="q10a">A) Суда уылдырық шашу</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10b" name="q10" value="B">
+            <label for="q10b">B) Іштей ұрықтану</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10c" name="q10" value="C">
+            <label for="q10c">C) Жұмыртқа арқылы</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q10d" name="q10" value="D">
+            <label for="q10d">D) Құйрығымен көбею</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 11 -->
+      <div class="question">
+        <p>11. Қаңқасы жоқ жануарлар:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q11a" name="q11" value="A">
+            <label for="q11a">A) Балықтар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11b" name="q11" value="B">
+            <label for="q11b">B) Құстар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11c" name="q11" value="C">
+            <label for="q11c">C) Медуза</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q11d" name="q11" value="D">
+            <label for="q11d">D) Сүтқоректілер</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 12 -->
+      <div class="question">
+        <p>12. Ішекқуыстыларға жататын жануар:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q12a" name="q12" value="A">
+            <label for="q12a">A) Құрт</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12b" name="q12" value="B">
+            <label for="q12b">B) Медуза</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12c" name="q12" value="C">
+            <label for="q12c">C) Шаян</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q12d" name="q12" value="D">
+            <label for="q12d">D) Қоңыз</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 13 -->
+      <div class="question">
+        <p>13. Жануарлар әлемінің негізгі үш белгісі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q13a" name="q13" value="A">
+            <label for="q13a">A) Тыныс алу, тынығу, көбею</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13b" name="q13" value="B">
+            <label for="q13b">B) Қозғалу, қоректену, көбею</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13c" name="q13" value="C">
+            <label for="q13c">C) Дем алу, ойнау, ұйықтау</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q13d" name="q13" value="D">
+            <label for="q13d">D) Қорғану, көру, сөйлеу</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 14 -->
+      <div class="question">
+        <p>14. Сүтқоректілердің дене температурасы:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q14a" name="q14" value="A">
+            <label for="q14a">A) Суыққанды</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14b" name="q14" value="B">
+            <label for="q14b">B) Төмен</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14c" name="q14" value="C">
+            <label for="q14c">C) Жылысақ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q14d" name="q14" value="D">
+            <label for="q14d">D) Тұрақты</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 15 -->
+      <div class="question">
+        <p>15. Қосмекенділердің дернәсілі қалай аталады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q15a" name="q15" value="A">
+            <label for="q15a">A) Құрт</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15b" name="q15" value="B">
+            <label for="q15b">B) Шабақ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15c" name="q15" value="C">
+            <label for="q15c">C) Итбалық</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q15d" name="q15" value="D">
+            <label for="q15d">D) Итшабақ</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 16 -->
+      <div class="question">
+        <p>16. Бунақденелілерде қанша аяқ болады?</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q16a" name="q16" value="A">
+            <label for="q16a">A) 4</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q16b" name="q16" value="B">
+            <label for="q16b">B) 6</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q16c" name="q16" value="C">
+            <label for="q16c">C) 8</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q16d" name="q16" value="D">
+            <label for="q16d">D) 10</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 17 -->
+      <div class="question">
+        <p>17. Омыртқалылар мен омыртқасыздардың негізгі айырмашылығы:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q17a" name="q17" value="A">
+            <label for="q17a">A) Қан түсі</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q17b" name="q17" value="B">
+            <label for="q17b">B) Қаңқа болуы</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q17c" name="q17" value="C">
+            <label for="q17c">C) Қанаттар</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q17d" name="q17" value="D">
+            <label for="q17d">D) Ауамен тыныс алуы</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 18 -->
+      <div class="question">
+        <p>18. Балықтың тыныс алу мүшесі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q18a" name="q18" value="A">
+            <label for="q18a">A) Өкпе</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q18b" name="q18" value="B">
+            <label for="q18b">B) Тері</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q18c" name="q18" value="C">
+            <label for="q18c">C) Желбезек</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q18d" name="q18" value="D">
+            <label for="q18d">D) Кеңірдек</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 19 -->
+      <div class="question">
+        <p>19. Жануарлардың қозғалу мүшесі:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q19a" name="q19" value="A">
+            <label for="q19a">A) Тырнақ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q19b" name="q19" value="B">
+            <label for="q19b">B) Қанат</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q19c" name="q19" value="C">
+            <label for="q19c">C) Аяқ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q19d" name="q19" value="D">
+            <label for="q19d">D) Денесі</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 20 -->
+      <div class="question">
+        <p>20. Құрттардың дене пішіні:</p>
+        <div class="answers">
+          <div class="answer-option">
+            <input type="radio" id="q20a" name="q20" value="A">
+            <label for="q20a">A) Сақиналы</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q20b" name="q20" value="B">
+            <label for="q20b">B) Сопақ</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q20c" name="q20" value="C">
+            <label for="q20c">C) Жіп тәрізді</label>
+          </div>
+          <div class="answer-option">
+            <input type="radio" id="q20d" name="q20" value="D">
+            <label for="q20d">D) Жалпақ</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <a href="../../tests/test1.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Артқа
+        </a>
+        <button type="button" class="btn btn-primary" onclick="checkAnswers()">
+          <i class="fas fa-check-circle"></i> Нәтижені көру
+        </button>
+      </div>
+      
+    </form>
+
+    <div id="result">
+        <div class="result-title">Тест нәтижесі</div>
+        <div class="result-score"><span id="score">0</span></div>
+        <div class="result-message" id="resultMessage">Жақсы жұмыс!</div>
+        <div class="result-actions">
+          <a href="zoology-quiz.html" class="btn btn-secondary">
+            <i class="fas fa-redo"></i> Қайта тапсыру
+          </a>
+          <a href="../../home.html" class="btn btn-primary">
+            <i class="fas fa-home"></i> Басты бет
+          </a>
+        </div>
+      </div>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Timer functionality
+    let timeLeft = 300; // 5 minutes in seconds
+    const timerElement = document.getElementById('timer');
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      
+      // Format the time display (add leading zeros if needed)
+      timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      // Add visual warnings as time decreases
+      if (timeLeft <= 60) {
+        timerElement.classList.add('warning');
+      }
+      if (timeLeft <= 30) {
+        timerElement.classList.remove('warning');
+        timerElement.classList.add('danger');
+      }
+      
+      if (timeLeft <= 0) {
+        // Time's up - automatically submit the quiz
+        clearInterval(timerInterval);
+        checkAnswers();
+        timerElement.textContent = "Уақыт бітті!";
+      } else {
+        timeLeft--;
+      }
+    }
+
+    // Start the timer
+    updateTimer();
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Update progress bar as user moves through questions
+    const questions = document.querySelectorAll('.question');
+    let currentQuestionIndex = 0;
+    const progressFill = document.getElementById('progressFill');
+    const currentQuestionSpan = document.getElementById('currentQuestion');
+
+    // Initial setup
+    updateProgress();
+
+    // Add event listeners to all radio buttons
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        // Find the current question
+        const questionDiv = this.closest('.question');
+        const nextQuestion = questionDiv.nextElementSibling;
+        
+        if (nextQuestion && nextQuestion.classList.contains('question')) {
+          // Scroll to next question
+          nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          // Update current question index
+          currentQuestionIndex = Array.from(questions).indexOf(nextQuestion);
+          updateProgress();
+        }
+      });
+    });
+
+    function updateProgress() {
+      const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+      progressFill.style.width = `${progress}%`;
+      currentQuestionSpan.textContent = currentQuestionIndex + 1;
+    }
+
+    function checkAnswers() {
+      // Stop the timer when quiz is submitted
+      clearInterval(timerInterval);
+      
+      let score = 0;
+      let totalQuestions = 20;
+      
+      if (document.querySelector('input[name="q1"]:checked')?.value === "D") score++;
+      if (document.querySelector('input[name="q2"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q3"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q4"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q5"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q6"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q7"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q8"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q9"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q10"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q11"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q12"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q13"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q14"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q15"]:checked')?.value === "D") score++;
+      if (document.querySelector('input[name="q16"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q17"]:checked')?.value === "B") score++;
+      if (document.querySelector('input[name="q18"]:checked')?.value === "A") score++;
+      if (document.querySelector('input[name="q19"]:checked')?.value === "C") score++;
+      if (document.querySelector('input[name="q20"]:checked')?.value === "A") score++;
+      
+      // Display result
+      const scoreElement = document.getElementById('score');
+      const resultMessage = document.getElementById('resultMessage');
+      const resultDiv = document.getElementById('result');
+      
+      scoreElement.textContent = `${score}/${totalQuestions}`;
+      
+      if (score / totalQuestions >= 0.8) {
+        resultMessage.textContent = "Тамаша! Сіз зоология тақырыбын жақсы меңгергенсіз!";
+      } else if (score / totalQuestions >= 0.6) {
+        resultMessage.textContent = "Жақсы! Біраз білімдерді меңгергенсіз.";
+      } else {
+        resultMessage.textContent = "Зоология тақырыбын қайта қарап шығуыңыз керек.";
+      }
+      
+      resultDiv.style.display = "block";
+      resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+

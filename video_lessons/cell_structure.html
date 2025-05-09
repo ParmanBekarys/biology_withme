@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жасуша құрылымдары - Видео сабақ</title>
+    <link rel="stylesheet" href="../nav.css">
+    <link rel="stylesheet" href="../video_lesson.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 90px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #12594D;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .video-container {
+            width: 100%;
+            background-color: #000;
+        }
+        
+        .video-container iframe {
+            width: 100%;
+            height: 230px;
+            display: block;
+        }
+        
+        .lesson-content {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .lesson-info {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 20px;
+            color: #12594D;
+            margin-bottom: 5px;
+        }
+        
+        .info-item span {
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .content-block {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .content-block h2 {
+            color: #12594D;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .content-block h3 {
+            color: #333;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .content-block p {
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 15px;
+        }
+        
+        .content-block ul, .content-block ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .content-block li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            color: #444;
+        }
+        
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .image-caption {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .content-table th, .content-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .content-table th {
+            background-color: #f5f5f5;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .content-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .question p {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .show-answer-btn {
+            background-color: #12594D;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .answer {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 3px solid #12594D;
+            color: #444;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            display: inline-block;
+            background-color: #12594D;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .prev-button i {
+            margin-right: 5px;
+        }
+        
+        .next-button i {
+            margin-left: 5px;
+        }
+        /* Floating buttons */
+        .floating-btn {
+            position: fixed;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .floating-btn i {
+            font-size: 22px;
+        }
+
+        .home-btn {
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .chat-btn {
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        
+        @media (min-width: 768px) {
+            .video-container iframe {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="../Video.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        <h1>Жасуша құрылымдары</h1>
+    </div>
+    
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/URUJD5NEXC8" title="Жасуша құрылымдары" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <div class="lesson-content">
+        <div class="lesson-info">
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>10 минут</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>15.05.2023</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-check-circle"></i>
+                <span>Аяқталды</span>
+            </div>
+        </div>
+        
+        <div class="content-block">
+            <h2>Сабақ конспектісі: Жасуша құрылымдары</h2>
+            
+            <p>
+                Жасуша — тірі ағзалардың негізгі құрылымдық және функциялық бірлігі. Әрбір жасушада бірнеше маңызды құрылымдық бөліктер бар, олардың әрқайсысы өзіндік қызмет атқарады.
+            </p>
+            
+            <div class="image-container">
+                <img src="https://natworld.info/wp-content/uploads/2015/08/prokarioty-i-eukarioty.jpg" alt="Жасуша құрылымы">
+                <div class="image-caption">Эукариотты жасушаның негізгі құрылымдары</div>
+            </div>
+            
+            <h3>1. Жасуша мембранасы (Плазмалық мембрана)</h3>
+            <p>
+                Жасуша мембранасы — жасушаны сыртқы ортадан бөліп тұратын жұқа, жартылай өткізгіш қабат. Ол фосфолипидтерден, ақуыздардан және көмірсулардан тұрады.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Жасушаны қоршаған ортадан бөлу</li>
+                <li>Заттардың жасушаға кіруі мен шығуын реттеу</li>
+                <li>Жасушааралық байланыс пен сигналдардың берілуіне қатысу</li>
+            </ul>
+            
+            <div class="image-container">
+                <img src="https://microbenotes.com/wp-content/uploads/2018/11/Cell-Plasma-Membrane.jpg" alt="Жасуша мембранасы">
+                <div class="image-caption">Плазмалық мембрананың құрылымы</div>
+            </div>
+            
+            <h3>2. Цитоплазма</h3>
+            <p>
+                Цитоплазма — ядро мен жасуша мембранасы арасындағы жартылай сұйық орта. Ол негізінен судан (70-80%), сонымен қатар ақуыздар, көмірсулар, липидтер және минералды заттардан тұрады.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Жасушаның барлық органоидтарын қамтиды</li>
+                <li>Зат алмасу реакцияларына орта болады</li>
+                <li>Заттардың жасуша ішінде тасымалдануына ықпал етеді</li>
+            </ul>
+            
+            <h3>3. Ядро</h3>
+            <p>
+                Ядро — эукариотты жасушаның ең үлкен және маңызды органоиды. Ол екі қабатты мембранамен қоршалған және тұқым қуалайтын ақпаратты (ДНҚ) сақтайды.
+            </p>
+            <p><strong>Құрамдас бөліктері:</strong></p>
+            <ul>
+                <li><strong>Ядро мембранасы</strong> — ядроны цитоплазмадан бөліп тұрады</li>
+                <li><strong>Хроматин</strong> — ДНҚ мен ақуыздардан тұратын құрылым</li>
+                <li><strong>Ядрошық</strong> — рибосомалар құрастырылатын орын</li>
+                <li><strong>Ядролық нуклеоплазма</strong> — ядроның ішіндегі сұйық орта</li>
+            </ul>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Тұқым қуалайтын ақпаратты сақтау</li>
+                <li>Жасуша бөлінуін басқару</li>
+                <li>Ақуыз синтезін реттеу</li>
+            </ul>
+            
+            <div class="image-container">
+                <img src="https://itest.kz/uploads/images/7_%D0%86%20%D1%82%D0%B0%D1%80%D0%B0%D1%83.%20%D0%AD%D1%83%D0%BA%D0%BE%D1%80%D0%B8%D0%BE%D1%82%D1%82%D1%8B%20%D0%BA%D0%BB%D0%B5%D1%82%D0%BA%D0%B0.%20%D0%AF%D0%B4%D1%80%D0%BE_01-01.png" alt="Жасуша ядросы">
+                <div class="image-caption">Жасуша ядросының құрылымы</div>
+            </div>
+            
+            <h3>4. Митохондриялар</h3>
+            <p>
+                Митохондриялар — эукариотты жасушалардың "электр станциясы" деп аталатын мембраналық органоидтары. Олар жасушаның энергия қажеттіліктерін қамтамасыз етеді.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Аэробты тыныс алу арқылы АТФ өндіру</li>
+                <li>Жасуша метаболизмінде маңызды рөл атқару</li>
+                <li>Кальций иондарын сақтау және реттеу</li>
+            </ul>
+            
+            <h3>5. Эндоплазмалық тор (ЭПТ)</h3>
+            <p>
+                Эндоплазмалық тор — жасуша ішіндегі мембраналық жүйе. Екі түрі бар: бұдырлы ЭПТ және тегіс ЭПТ.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li><strong>Бұдырлы ЭПТ</strong> — ақуыздар синтезі және тасымалдануы</li>
+                <li><strong>Тегіс ЭПТ</strong> — липидтер, стероидтар синтезі және улы заттардың зарарсыздандырылуы</li>
+            </ul>
+            
+            <h3>6. Гольджи аппараты</h3>
+            <p>
+                Гольджи аппараты — мембраналық қапшықтардан (цистерналардан) тұратын органоид. Бұл органоид ақуыздарды модификациялау, сұрыптау және тасымалдау қызметін атқарады.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Ақуыздарды модификациялау</li>
+                <li>Жасуша өнімдерін сұрыптау және тасымалдау</li>
+                <li>Лизосомалар мен секреторлық везикулаларды түзу</li>
+            </ul>
+            
+            <h3>7. Лизосомалар</h3>
+            <p>
+                Лизосомалар — мембранамен қоршалған, ішінде гидролитикалық ферменттері бар органоидтар. Олар жасуша ішіндегі "қорытқыш" рөлін атқарады.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>Жасуша ішіндегі қажетсіз компоненттерді ыдырату</li>
+                <li>Фагоцитоз кезінде жұтылған бөгде заттарды қорыту</li>
+                <li>Аутофагия процесіне қатысу</li>
+            </ul>
+            
+            <h3>8. Рибосомалар</h3>
+            <p>
+                Рибосомалар — ақуыз және РНҚ-дан тұратын кішкене органоидтар. Олар жасушадағы ақуыз синтезіне жауап береді.
+            </p>
+            <p><strong>Қызметтері:</strong></p>
+            <ul>
+                <li>мРНҚ-дан ақуыздар синтезі (трансляция)</li>
+                <li>Ақуыздардың бастапқы құрылымын құру</li>
+            </ul>
+            
+            <h3>Өсімдік жасушаларының арнайы органоидтары</h3>
+            <p>
+                Өсімдік жасушаларында жануар жасушаларынан айырмашылығы бар бірнеше арнайы органоидтар болады:
+            </p>
+            
+            <table class="content-table">
+                <tr>
+                    <th>Органоид</th>
+                    <th>Қызметі</th>
+                </tr>
+                <tr>
+                    <td><strong>Хлоропласттар</strong></td>
+                    <td>Фотосинтез — жарық энергиясын химиялық энергияға айналдыру</td>
+                </tr>
+                <tr>
+                    <td><strong>Жасуша қабырғасы</strong></td>
+                    <td>Жасушаға қатты пішін береді және оны қорғайды</td>
+                </tr>
+                <tr>
+                    <td><strong>Вакуоль</strong></td>
+                    <td>Су мен басқа да заттарды сақтайды, жасушаға тургор қысымын береді</td>
+                </tr>
+            </table>
+            
+            <div class="image-container">
+                <img src="https://www.zharar.com/uploads/posts/2020-07/1595248083_zhasuu.png" alt="Жануар және өсімдік жасушаларын салыстыру">
+                <div class="image-caption">Жануар және өсімдік жасушаларының айырмашылықтары</div>
+            </div>
+        </div>
+        
+        <div class="content-block">
+            <h2>Бақылау сұрақтары</h2>
+            
+            <div class="question">
+                <p>1. Жасуша мембранасы қандай негізгі қызметтерді атқарады?</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Жасуша мембранасы жасушаны сыртқы ортадан бөледі, заттардың жасушаға кіруі мен шығуын реттейді және жасушааралық байланыс пен сигналдардың берілуіне қатысады.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>2. Жасуша ядросының негізгі компоненттерін атаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Ядро мембранасы, хроматин, ядрошық және ядролық нуклеоплазма.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>3. Митохондрияларды неліктен "жасушаның электр станциясы" деп атайды?</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Митохондриялар аэробты тыныс алу процесі арқылы жасушаның энергиялық қажеттіліктерін қамтамасыз ететін АТФ өндіреді.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>4. Өсімдік жасушалары мен жануар жасушаларының арасындағы үш негізгі айырмашылықты атаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    1) Өсімдік жасушаларында хлоропласттар, жануар жасушаларында жоқ.<br>
+                    2) Өсімдік жасушаларында целлюлозадан тұратын жасуша қабырғасы бар.<br>
+                    3) Өсімдік жасушаларында үлкен орталық вакуоль болады, ал жануар жасушаларында көптеген кіші вакуольдер болуы мүмкін.
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>5. Гольджи аппаратының негізгі функцияларын сипаттаңыз.</p>
+                <button class="show-answer-btn">Жауабын көрсету</button>
+                <div class="answer">
+                    Гольджи аппараты ақуыздарды модификациялайды, жасуша өнімдерін сұрыптайды және тасымалдайды, сондай-ақ лизосомалар мен секреторлық везикулаларды түзеді.
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="cell_intro.html" class="nav-button prev-button">
+                <i class="fas fa-arrow-left"></i> Алдыңғы сабақ
+            </a>
+            <a href="mitochondria.html" class="nav-button next-button">
+                Келесі сабақ <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <a href="../chat.html" class="floating-btn chat-btn">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+    <script>
+        // Жауаптарды көрсету/жасыру
+        document.querySelectorAll('.show-answer-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    this.textContent = 'Жауабын көрсету';
+                } else {
+                    answer.style.display = 'block';
+                    this.textContent = 'Жауапты жасыру';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
