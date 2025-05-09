@@ -1,3 +1,7 @@
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:3000/api/chat'
+  : '/api/chat';
+
 document.addEventListener('DOMContentLoaded', function() {
     const chatMessages = document.getElementById('chatMessages');
     const userInput = document.getElementById('userInput');
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showTypingIndicator();
             
             // Send API request
-            const response = await fetch('http://localhost:3000/api/chat', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
