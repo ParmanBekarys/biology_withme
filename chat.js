@@ -56,20 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show typing indicator
             showTypingIndicator();
             
-            // Determine API URL based on hostname
-            const hostname = window.location.hostname;
-            let apiUrl;
-            
-            if (hostname === '127.0.0.1' || hostname === 'localhost') {
-                // Local development
-                apiUrl = 'http://localhost:3000/api/chat';
-            } else if (hostname === '192.168.123.102') {
-                // Your local network IP
-                apiUrl = 'http://192.168.123.102:3000/api/chat';
-            } else {
-                // Vercel or other deployment
-                apiUrl = '/api/chat';
-            }
+            // Use Netlify function URL
+            const apiUrl = '/api/chat';
             
             // Send API request
             const response = await fetch(apiUrl, {
